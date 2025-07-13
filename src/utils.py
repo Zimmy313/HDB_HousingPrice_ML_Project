@@ -192,3 +192,12 @@ float: The calculated 'age_of_flat', which is set to 0 if the result is negative
     age = 99 - row['remaining_lease']
     
     return max(age, 0)
+
+def add_fractional_year(df, date_col='month', new_col='fractional_year'):
+    df[date_col] = pd.to_datetime(df[date_col])
+    df[new_col] = (
+        df[date_col].dt.year +
+        (df[date_col].dt.month - 1) / 12 +
+        (df[date_col].dt.day - 1) / 365
+    ).round(5)  # Optional: rounding for precision
+    return df
