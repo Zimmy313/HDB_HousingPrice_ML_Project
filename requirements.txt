@@ -4,3 +4,5 @@ numpy == 2.1.0
 matplotlib==3.9.2
 matplotlib-inline==0.1.7
 seaborn==0.13.2
+plotly==5.21.0
+joblib==1.4.2
