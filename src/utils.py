@@ -194,10 +194,26 @@ float: The calculated 'age_of_flat', which is set to 0 if the result is negative
     return max(age, 0)
 
 def add_fractional_year(df, date_col='month', new_col='fractional_year'):
-    df[date_col] = pd.to_datetime(df[date_col])
-    df[new_col] = (
-        df[date_col].dt.year +
-        (df[date_col].dt.month - 1) / 12 +
-        (df[date_col].dt.day - 1) / 365
-    ).round(5)  # Optional: rounding for precision
-    return df
+    """
+    Add a fractional year column to a copy of the input DataFrame based on a date column.
+
+    This function converts the given date column to datetime (if not already),
+    then calculates a fractional year representation:
+        year + (month - 1)/12 + (day - 1)/365
+
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        date_col (str): Name of the column containing date information. Default is 'month'.
+        new_col (str): Name of the new column to store the fractional year. Default is 'fractional_year'.
+
+    Returns:
+        pd.DataFrame: A new DataFrame with the additional fractional year column.
+    """
+    df_copy = df.copy()
+    df_copy[date_col] = pd.to_datetime(df_copy[date_col])
+    df_copy[new_col] = (
+        df_copy[date_col].dt.year +
+        (df_copy[date_col].dt.month - 1) / 12 +
+        (df_copy[date_col].dt.day - 1) / 365
+    ).round(5)
+    return df_copy
